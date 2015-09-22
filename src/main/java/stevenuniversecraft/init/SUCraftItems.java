@@ -11,6 +11,8 @@ public class SUCraftItems
 	public static Item roses_sword;
 	public static Item blaster;
 	public static Item blaster_ammo;
+	public static Item water_hand;
+	public static Item water_hand_ammo;
 	
 	public static void init()
 	{
@@ -20,5 +22,7 @@ public class SUCraftItems
 		roses_sword = new ItemRosesSword();
 		blaster = new ItemBlaster();
 		blaster_ammo = new ItemBlasterAmmo();
+		water_hand = new ItemWaterHand();
+		water_hand_ammo = new ItemWaterHandAmmo();
 	}
 }

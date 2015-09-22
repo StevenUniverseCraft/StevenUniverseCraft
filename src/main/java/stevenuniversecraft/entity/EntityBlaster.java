@@ -24,9 +24,9 @@ public class EntityBlaster extends EntityThrowable
 	
 	private void explode()
 	{
-		int bx = (int)posX;
-		int by = (int)posY;
-		int bz = (int)posZ;
+	//	int bx = (int)posX;
+	//	int by = (int)posY;
+	//	int bz = (int)posZ;
 		worldObj.createExplosion(this, posX, posY, posZ, 0.75F, true);
 		/*
 		for (int x = bx - 4; x <= bx + 4; x++)

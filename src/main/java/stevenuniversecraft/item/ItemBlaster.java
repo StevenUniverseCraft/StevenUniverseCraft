@@ -2,12 +2,10 @@ package stevenuniversecraft.item;
 
 import org.lwjgl.input.Keyboard;
 
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import stevenuniversecraft.entity.EntityBlaster;
 import stevenuniversecraft.init.SUCraftItems;
@@ -19,7 +17,7 @@ public class ItemBlaster extends ItemSUCraft
 		super("blaster");
 		setCreativeTab(CreativeTabs.tabCombat);
 		setMaxStackSize(1);
-		setMaxDamage(20);
+		setMaxDamage(0);
 	}
 	
 	@Override
@@ -28,7 +26,7 @@ public class ItemBlaster extends ItemSUCraft
 		if (entity instanceof EntityPlayer)
 		{
 			EntityPlayer player = (EntityPlayer)entity;
-			if (player.getCurrentEquippedItem().getItem() == this)
+			if (player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() == this)
 			{
 				if (Keyboard.isKeyDown(Keyboard.KEY_SPACE))
 				{
@@ -57,9 +55,8 @@ public class ItemBlaster extends ItemSUCraft
 				world.spawnEntityInWorld(new EntityBlaster(world, player));
 			}
 		}
-		if (player.inventory.consumeInventoryItem(SUCraftItems.blaster_ammo) && stack.getItemDamage() <= 20)
+		if (player.inventory.consumeInventoryItem(SUCraftItems.blaster_ammo))
 		{
-			stack.damageItem(1, player);
 			player.swingItem();
 		//	world.playSoundAtEntity(player, StevenUniverseCraft.MODID + ":", 0.5F, 1.0F);
 			if (!world.isRemote)

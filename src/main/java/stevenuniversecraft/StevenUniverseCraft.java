@@ -4,7 +4,7 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
-import stevenuniversecraft.entity.EntityBlaster;
+import stevenuniversecraft.entity.*;
 import stevenuniversecraft.init.SUCraftBlocks;
 import stevenuniversecraft.init.SUCraftItems;
 import stevenuniversecraft.proxy.CommonProxy;
@@ -28,6 +28,7 @@ public class StevenUniverseCraft
 		SUCraftItems.init();
 		SUCraftBlocks.init();
 		EntityRegistry.registerModEntity(EntityBlaster.class, "blaster", 0, this, 64, 10, true);
+		EntityRegistry.registerModEntity(EntityWaterHand.class, "water_hand", 1, this, 64, 10, true);
 		
 		proxy.registerRenderers();
 	}
