@@ -1,10 +1,7 @@
 package stevenuniversecraft.init;
 
 import net.minecraft.item.Item;
-import stevenuniversecraft.item.ItemGemDestabilizer;
-import stevenuniversecraft.item.ItemFireGauntlet;
-import stevenuniversecraft.item.ItemPearlsSpear;
-import stevenuniversecraft.item.ItemRosesSword;
+import stevenuniversecraft.item.*;
 
 public class SUCraftItems
 {
@@ -12,6 +9,8 @@ public class SUCraftItems
 	public static Item pearls_spear;
 	public static Item gem_destabilizer;
 	public static Item roses_sword;
+	public static Item blaster;
+	public static Item blaster_ammo;
 	
 	public static void init()
 	{
@@ -19,5 +18,7 @@ public class SUCraftItems
 		pearls_spear = new ItemPearlsSpear();
 		gem_destabilizer = new ItemGemDestabilizer();
 		roses_sword = new ItemRosesSword();
+		blaster = new ItemBlaster();
+		blaster_ammo = new ItemBlasterAmmo();
 	}
 }

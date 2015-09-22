@@ -1,8 +1,13 @@
 package stevenuniversecraft;
 
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import stevenuniversecraft.init.*;
+import cpw.mods.fml.common.registry.EntityRegistry;
+import stevenuniversecraft.entity.EntityBlaster;
+import stevenuniversecraft.init.SUCraftBlocks;
+import stevenuniversecraft.init.SUCraftItems;
+import stevenuniversecraft.proxy.CommonProxy;
 
 @Mod(name = StevenUniverseCraft.NAME, modid = StevenUniverseCraft.MODID, version = StevenUniverseCraft.VERSION)
 public class StevenUniverseCraft
@@ -14,10 +19,16 @@ public class StevenUniverseCraft
 	@Mod.Instance(StevenUniverseCraft.MODID)
 	public static StevenUniverseCraft instance;
 	
+	@SidedProxy(clientSide = "stevenuniversecraft.proxy.ClientProxy", serverSide = "stevenuniversecraft.proxy.CommonProxy")
+	public static CommonProxy proxy;
+	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		SUCraftItems.init();
 		SUCraftBlocks.init();
+		EntityRegistry.registerModEntity(EntityBlaster.class, "blaster", 0, this, 64, 10, true);
+		
+		proxy.registerRenderers();
 	}
 }
