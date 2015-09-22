@@ -20,7 +20,7 @@ public class SUCraftItems
 		pearls_spear = new ItemPearlsSpear();
 		gem_destabilizer = new ItemGemDestabilizer();
 		roses_sword = new ItemRosesSword();
-		blaster = new ItemBlaster();
+		blaster = new ItemPeridotsBlaster();
 		blaster_ammo = new ItemBlasterAmmo();
 		water_hand = new ItemWaterHand();
 		water_hand_ammo = new ItemWaterHandAmmo();

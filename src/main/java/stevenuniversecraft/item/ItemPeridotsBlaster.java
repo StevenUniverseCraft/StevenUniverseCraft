@@ -10,11 +10,11 @@ import net.minecraft.world.World;
 import stevenuniversecraft.entity.EntityBlaster;
 import stevenuniversecraft.init.SUCraftItems;
 
-public class ItemBlaster extends ItemSUCraft
+public class ItemPeridotsBlaster extends ItemSUCraft
 {
-	public ItemBlaster()
+	public ItemPeridotsBlaster()
 	{
-		super("blaster");
+		super("peridots_blaster");
 		setCreativeTab(CreativeTabs.tabCombat);
 		setMaxStackSize(1);
 		setMaxDamage(0);
