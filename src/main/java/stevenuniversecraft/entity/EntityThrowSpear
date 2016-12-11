@@ -1,0 +1,102 @@
+package mod.mcreator;
+
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import java.util.Random;
+import net.minecraft.client.renderer.entity.RenderSnowball;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.EntityInteractEvent;
+
+public class mcreator_throwspear
+{
+  public static int mobid = 0;
+  public Object instance;
+  
+  public void load() {}
+  
+  public void generateNether(World world, Random random, int chunkX, int chunkZ) {}
+  
+  public void generateSurface(World world, Random random, int chunkX, int chunkZ) {}
+  
+  public int addFuel(ItemStack fuel)
+  {
+    return 0;
+  }
+  
+  @SideOnly(Side.CLIENT)
+  public void registerRenderers()
+  {
+    RenderingRegistry.registerEntityRenderingHandler(Entitythrowspear.class, new RenderSnowball(mcreator_pearlsSpear.block));
+  }
+  
+  public void serverLoad(FMLServerStartingEvent event) {}
+  
+  public void preInit(FMLPreInitializationEvent event)
+  {
+    int entityID = EntityRegistry.findGlobalUniqueEntityId();
+    mobid = entityID;
+    EntityRegistry.registerGlobalEntityID(Entitythrowspear.class, "throwspear", entityID);
+    EntityRegistry.registerModEntity(Entitythrowspear.class, "throwspear", entityID, this.instance, 64, 1, true);
+  }
+  
+  public static class Entitythrowspear
+    extends EntityThrowable
+  {
+    public Entitythrowspear(World par1World, double par2, double par4, double par6)
+    {
+      super(par2, par4, par6);
+    }
+    
+    public Entitythrowspear(World par1World, EntityLivingBase par2EntityLivingBase)
+    {
+      super(par2EntityLivingBase);
+    }
+    
+    public Entitythrowspear(World par1World)
+    {
+      super();
+    }
+    
+    protected void func_70184_a(MovingObjectPosition par1MovingObjectPosition)
+    {
+      if (par1MovingObjectPosition.field_72308_g != null)
+      {
+        byte b0 = 28;
+        
+        par1MovingObjectPosition.field_72308_g.func_70097_a(DamageSource.func_76356_a(this, func_85052_h()), b0);
+      }
+      if (!this.field_70170_p.field_72995_K) {
+        func_70106_y();
+      }
+    }
+  }
+  
+  public void interactEvent(EntityInteractEvent event)
+  {
+    if ((event.target instanceof EntityCreature))
+    {
+      int entityID = EntityList.func_75619_a(event.target);
+      ItemStack currentItem = event.entityPlayer.field_71071_by.func_70448_g();
+      if ((currentItem != null) && 
+        (currentItem == new ItemStack(mcreator_pearlsSpear.block, 1)) && (currentItem.func_77960_j() == 0))
+      {
+        event.target.func_70106_y();
+        currentItem.func_77964_b(entityID);
+      }
+    }
+  }
+}
