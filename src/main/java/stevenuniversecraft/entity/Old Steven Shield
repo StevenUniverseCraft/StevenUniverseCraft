@@ -1,0 +1,316 @@
+package mod.mcreator;//based on master condiguration
+
+import cpw.mods.fml.client.*;
+import cpw.mods.fml.client.registry.*;
+import cpw.mods.fml.common.*;
+import cpw.mods.fml.common.asm.*;
+import cpw.mods.fml.common.asm.transformers.*;
+import cpw.mods.fml.common.discovery.*;
+import cpw.mods.fml.common.discovery.asm.*;
+import cpw.mods.fml.common.event.*;
+import cpw.mods.fml.common.functions.*;
+import cpw.mods.fml.common.network.*;
+import cpw.mods.fml.common.registry.*;
+import cpw.mods.fml.common.toposort.*;
+import cpw.mods.fml.common.versioning.*;
+import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.server.*;
+import net.minecraft.block.*;
+import net.minecraft.block.material.*;
+import net.minecraft.client.*;
+import net.minecraft.client.audio.*;
+import net.minecraft.client.entity.*;
+import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.achievement.*;
+import net.minecraft.client.gui.inventory.*;
+import net.minecraft.client.model.*;
+import net.minecraft.client.multiplayer.*;
+import net.minecraft.client.particle.*;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.culling.*;
+import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.renderer.tileentity.*;
+import net.minecraft.client.settings.*;
+import net.minecraft.command.*;
+import net.minecraft.crash.*;
+import net.minecraft.creativetab.*;
+import net.minecraft.dispenser.*;
+import net.minecraft.enchantment.*;
+import net.minecraft.entity.*;
+import net.minecraft.entity.ai.*;
+import net.minecraft.entity.boss.*;
+import net.minecraft.entity.effect.*;
+import net.minecraft.entity.item.*;
+import net.minecraft.entity.monster.*;
+import net.minecraft.entity.passive.*;
+import net.minecraft.entity.player.*;
+import net.minecraft.entity.projectile.*;
+import net.minecraft.inventory.*;
+import net.minecraft.item.*;
+import net.minecraft.item.crafting.*;
+import net.minecraft.nbt.*;
+import net.minecraft.network.*;
+import net.minecraft.network.rcon.*;
+import net.minecraft.pathfinding.*;
+import net.minecraft.potion.*;
+import net.minecraft.profiler.*;
+import net.minecraft.server.*;
+import net.minecraft.server.dedicated.*;
+import net.minecraft.server.gui.*;
+import net.minecraft.server.integrated.*;
+import net.minecraft.server.management.*;
+import net.minecraft.src.*;
+import net.minecraft.stats.*;
+import net.minecraft.tileentity.*;
+import net.minecraft.util.*;
+import net.minecraft.village.*;
+import net.minecraft.world.*;
+import net.minecraft.world.biome.*;
+import net.minecraft.world.chunk.*;
+import net.minecraft.world.chunk.storage.*;
+import net.minecraft.world.demo.*;
+import net.minecraft.world.gen.*;
+import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.layer.*;
+import net.minecraft.world.gen.structure.*;
+import net.minecraft.world.storage.*;
+import net.minecraftforge.classloading.*;
+import net.minecraftforge.client.*;
+import net.minecraftforge.client.event.*;
+import net.minecraftforge.client.event.sound.*;
+import net.minecraftforge.common.*;
+import net.minecraftforge.event.*;
+import net.minecraftforge.event.entity.*;
+import net.minecraftforge.event.entity.item.*;
+import net.minecraftforge.event.entity.living.*;
+import net.minecraftforge.event.entity.minecart.*;
+import net.minecraftforge.event.entity.player.*;
+import net.minecraftforge.event.terraingen.*;
+import net.minecraftforge.event.world.*;
+import net.minecraftforge.oredict.*;
+import net.minecraftforge.transformers.*;
+import net.minecraft.init.*;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.block.material.Material;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
+import net.minecraft.block.material.Material;
+import net.minecraft.world.ChunkPosition;
+import net.minecraft.world.World;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import java.util.*;
+
+@SuppressWarnings("unchecked")
+public class mcreator_shield {
+ 
+    public static int mobid = 0;
+    public Object instance;
+ 
+    public void load(){}
+ 
+    public void generateNether(World world, Random random, int chunkX, int chunkZ){}
+    public void generateSurface(World world, Random random, int chunkX, int chunkZ){}
+    public int addFuel(ItemStack fuel){
+        return 0;
+    }
+    @SideOnly(Side.CLIENT)
+    public void registerRenderers(){
+        RenderingRegistry.registerEntityRenderingHandler(mcreator_shield.Entityshield.class, new RenderSnowball(mcreator_stevensShield.block));
+    }
+  
+ 
+    public void serverLoad(FMLServerStartingEvent event){}
+    public void preInit(FMLPreInitializationEvent event){
+        int entityID = EntityRegistry.findGlobalUniqueEntityId();
+        mobid = entityID;
+        EntityRegistry.registerGlobalEntityID(mcreator_shield.Entityshield.class, "shield", entityID);
+        EntityRegistry.registerModEntity(mcreator_shield.Entityshield.class, "shield", entityID, instance, 64, 1, true);
+       
+ 
+       
+    }
+ 
+ 
+  public static class Entityshield extends EntityThrowable{
+
+/** How many ticks the arrow has been in the air. */
+    public int inAirTicks;
+
+/** So sheild can actually be thrown. */
+ private int age;
+   
+public Entityshield(World par1World, double par2, double par4, double par6)
+{
+super(par1World, par2, par4, par6);
+}
+public Entityshield(World par1World, EntityLivingBase par2EntityLivingBase)
+{
+super(par1World, par2EntityLivingBase);
+}
+public Entityshield(World par1World)
+{
+super(par1World);
+}
+
+boolean hasCollided = true;
+@Override
+public void onUpdate() {
+    ++this.age;
+  if(hasCollided){
+    super.onUpdate();
+    inAirTicks++;
+      if(inAirTicks > 60){
+      this.worldObj.spawnParticle("fireworksSpark", this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
+        setDead();
+      }
+  }
+}
+
+public void writeEntityToNBT(NBTTagCompound tagCompound)
+    {
+       super.writeEntityToNBT(tagCompound);
+        tagCompound.setShort("Age", (short)this.age);
+        
+    }
+
+  
+  public void readEntityFromNBT(NBTTagCompound tagCompund)
+    {
+       super.readEntityFromNBT(tagCompund);
+        this.age = tagCompund.getShort("Age");
+      
+    }
+
+/** Shield hits entity and bounces off of it */
+@Override
+ public void onImpact(MovingObjectPosition mop) {
+  if(mop.entityHit != null) {
+
+   float throwDamage = 5;
+   mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, getThrower()), throwDamage);
+
+   if(mop.entityHit instanceof EntityLivingBase) {
+    byte b0 = 52;
+
+    switch(worldObj.difficultySetting) {
+     case NORMAL:
+      b0 = 52;
+      break;
+     case HARD:
+      b0 = 52;
+      break;
+     default:
+      break;
+    }
+
+    if(b0 > 0) {
+     
+    }
+   }
+if(mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+{
+/*
+* You might be wondering what
+* all these case and break are
+* These are use to switch the number
+* mop.sideHit
+*
+* Example:
+* If mop.sideHit == 3 whatever is in
+* case 3 Happens!
+*/
+switch(mop.sideHit)
+{
+case 0: //BOTTOM
+mop.blockY--;
+break;
+case 1: //TOP
+mop.blockY++;
+break;
+case 2: //EAST
+mop.blockZ--;
+break;
+case 3: //WEST
+mop.blockZ++;
+break;
+case 4: //NORTH
+mop.blockX--;
+break;
+case 5: //SOUTH
+mop.blockX++;
+break;
+}
+} 
+if(mop.entityHit instanceof EntityPlayer) {
+ EntityPlayer player = ((EntityPlayer)mop.entityHit);
+if(age > 6){
+        if (!this.worldObj.isRemote)
+        {
+        if (!player.inventory.addItemStackToInventory(new ItemStack(mcreator_stevensShield.block, 1)))
+                    {
+                        player.dropPlayerItemWithRandomChoice(new ItemStack(mcreator_stevensShield.block, 1), false);
+                    }
+    this.setDead();
+  }
+    }
+} 
+   for(int l = 0; l < 4; ++l) {
+    worldObj.spawnParticle("magicCrit", posX, posY, posZ, 0.0D, 0.0D, 0.0D);
+   }
+  bounceBack();
+  }
+ }
+   	
+	protected void bounceBack() {
+		setVelocity(-motionX, -motionY, -motionZ);
+	}	
+	@Override
+	protected float getGravityVelocity() {
+		return 0.0F;
+	}
+
+	/** Returns the shield's velocity */
+	protected float getVelocity() {
+		return func_70182_d();
+	}
+
+	/** Returns the shield's velocity */
+	@Override
+	protected float func_70182_d() {
+		return 1.25F;
+	}
+  }
+  
+
+public void interactEvent(EntityInteractEvent event){
+if(event.target instanceof EntityCreature){
+int entityID = EntityList.getEntityID(event.target);
+ItemStack currentItem = event.entityPlayer.inventory.getCurrentItem();
+if(currentItem != null){
+     if(currentItem == new ItemStack( mcreator_stevensShield.block, 1) && currentItem.getItemDamage() == 0){
+     event.target.setDead();
+     currentItem.setItemDamage(entityID);
+}
+}
+}
+}}
+
